@@ -18,12 +18,19 @@ import { CheckoutComponent } from './checkout/checkout.component';
 import { LoginComponent } from './login/login.component';
 import { RouterModule, Routes } from '@angular/router';
 import {  AngularFireAuthModule } from '@angular/fire/auth';
+import {FormsModule} from '@angular/forms';
+import {CustomFormsModule} from 'ng2-validation';
+import {BrowserAnimationsModule} from '@angular/platform-browser/animations';
+import {MatCardModule} from '@angular/material/card';
+import {MatTableModule} from '@angular/material/table';
 
 import { AuthserviceService } from './services/authservice.service';
 import { AuthGaurdService } from './services/auth-gaurd.service';
 import { UserService } from './services/user.service';
 import { AngularFireDatabaseModule } from '@angular/fire/database';
 import { AdminAuthGaurdService } from './services/admin-auth-gaurd.service';
+import { ProductFormComponent } from './admin/product-form/product-form.component';
+import { CategoryService } from './services/category.service';
 
 
 
@@ -35,8 +42,18 @@ const routes: Routes = [
   {path:'order-success' , component:OrderSuccessComponent ,canActivate : [AuthGaurdService]},
   {path:'my-orders' , component:MyOrdersComponent},
   {path:'login' , component:LoginComponent},
-  {path:'admin/admin-products' , component:AdminProductsComponent ,canActivate : [AuthGaurdService, AdminAuthGaurdService]},
-  {path:'admin/admin-orders' , component:AdminOrdersComponent, canActivate : [AuthGaurdService, AdminAuthGaurdService]}
+  
+  {path:'admin/admin-products' , 
+  component:AdminProductsComponent ,
+  canActivate : [AuthGaurdService, AdminAuthGaurdService]},
+
+  {path:'admin/admin-products/new' , 
+  component:ProductFormComponent,
+  canActivate : [AuthGaurdService, AdminAuthGaurdService]},
+
+  {path:'admin/admin-orders' , 
+  component:AdminOrdersComponent, 
+  canActivate : [AuthGaurdService, AdminAuthGaurdService]}
  ];
  
 
@@ -54,10 +71,16 @@ const routes: Routes = [
     AdminOrdersComponent,
     CheckoutComponent,
     LoginComponent,
+    ProductFormComponent,
     
   ],
   imports: [
+    MatCardModule,
+    MatTableModule,
+    BrowserAnimationsModule,
     BrowserModule,
+    CustomFormsModule,
+    FormsModule,
     AppRoutingModule,
     AngularFireModule.initializeApp(environment.firebase),
    AngularFirestoreModule,
@@ -69,7 +92,8 @@ const routes: Routes = [
   providers: [AuthserviceService,
                AuthGaurdService,
               UserService,
-                AdminAuthGaurdService] ,
+                AdminAuthGaurdService,
+                CategoryService] ,
   bootstrap: [AppComponent]
 })
 export class AppModule { }

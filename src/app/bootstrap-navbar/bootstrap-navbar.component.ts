@@ -12,16 +12,21 @@ import { AppUser } from '../Models/app-user';
 })
 export class BootstrapNavbarComponent  {
 appUser: AppUser;
+navbarOpen:boolean=false;
   constructor(private  authService: AuthserviceService) {   
-authService.appUsers$.subscribe(user=>{
-  console.log('navbarComponent:'+ user.isAdmin)
-  this.appUser = user;// appUser is unable to read the property 
-  console.log('appUser :'+ this.appUser.isAdmin);
+authService.appUsers$.subscribe(user=>{ // appUser$ returns observable of type AppUser
+  // console.log('navbarComponent:'+ user.isAdmin)
+  this.appUser = user;
+  // console.log('appUser :'+ this.appUser.isAdmin);
 })
   }
 
   logout(){
    this.authService.logout();
+  }
+
+  toggleNavbar(){
+    this.navbarOpen=!this.navbarOpen;
   }
 
 }

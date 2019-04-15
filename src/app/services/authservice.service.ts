@@ -19,8 +19,10 @@ export class AuthserviceService {
     private afAuth: AngularFireAuth,
     private  route: ActivatedRoute, 
     private router:Router) {
+
     this.user$=afAuth.authState;
-      }
+     
+  }
   
 
   login(){

@@ -3,24 +3,25 @@ import { CanActivate } from '@angular/router/src/utils/preactivation';
 import { AuthserviceService } from './authservice.service';
 
 import { map, switchMap } from 'rxjs/operators';
-import { UserService } from './user.service';
 import { Observable, pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
 })
-export class AdminAuthGaurdService  {
+export class AdminAuthGaurdService implements CanActivate {
+  path: import("@angular/router").ActivatedRouteSnapshot[];
+  route: import("@angular/router").ActivatedRouteSnapshot;
 
-  constructor(private auth: AuthserviceService , private userService: UserService) {
+  constructor(private auth: AuthserviceService) {
 
 
    }
 
    canActivate():Observable<boolean> {
 
-   return this.auth.appUsers$.pipe(
+   return this.auth.appUsers$.pipe(    // appUser returning AppUser type 
     
-        map(appUser=> appUser.isAdmin
+        map(appUser=> appUser.isAdmin    // mapping the type AppUser to a Boolean type
         )
     )
 
