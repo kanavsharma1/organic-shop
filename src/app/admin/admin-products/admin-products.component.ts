@@ -1,6 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
-import { map } from 'rxjs/operators';
+
 
 
 @Component({
@@ -10,20 +10,29 @@ import { map } from 'rxjs/operators';
 })
 export class AdminProductsComponent implements OnInit {
 
-  productList;
-  keys$
+  productList =[];
+  keys$;
   constructor(private productService:ProductService) {
-      productService.getAllProducts().valueChanges().subscribe(product=>{
-this.productList=product;
-console.log(this.productList);
+//       productService.getAllProducts().valueChanges().subscribe(product=>{
+// this.productList=product;// gets the list of products but not key
+// console.log(this.productList);
 
-     });
-     productService.getAllProducts().snapshotChanges().subscribe(key=>{
-       this.keys$=key;
+    //  });
+    this.keys$= productService.getAllProducts().subscribe(
+      list=>{
+        this.productList=list.map(item=>{
+          return{
+          $key : item.key,
+            ...item.payload.val()
+          };
+        })
+      }
+    )
+    console.log(this.keys$);
         
-     }
+     
        
-     )
+     
   }
 
   ngOnInit() {

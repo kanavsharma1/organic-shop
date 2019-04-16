@@ -13,11 +13,11 @@
           </tr>
         </thead>
         <tbody>
-          <tr *ngFor="let pl of productList; let key of keys$ | async">
+          <tr *ngFor="  let product of productList  ">
            
-            <td>{{pl.title}}</td>
-            <td>{{pl.price}}</td>
-            <td ><a [routerLink]="['/admin/products/',key.key]">edit</a></td>
+            <td>{{product.title}}</td>
+            <td>{{product.price}}</td>
+            <td ><a [routerLink] = "['/admin/admin-products/',product.$key]">edit</a></td>
           </tr>
         
         </tbody>
