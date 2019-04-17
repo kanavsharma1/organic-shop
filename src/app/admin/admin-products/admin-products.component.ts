@@ -1,5 +1,7 @@
 import { Component, OnInit } from '@angular/core';
 import { ProductService } from 'src/app/services/product.service';
+import { filter } from 'rxjs/operators';
+import { Product } from 'src/app/Models/product-object';
 
 
 
@@ -10,31 +12,43 @@ import { ProductService } from 'src/app/services/product.service';
 })
 export class AdminProductsComponent implements OnInit {
 
-  productList =[];
-  keys$;
-  constructor(private productService:ProductService) {
-//       productService.getAllProducts().valueChanges().subscribe(product=>{
-// this.productList=product;// gets the list of products but not key
-// console.log(this.productList);
+  productList;
+  products:Product[];
+  filteredProduct ;
 
-    //  });
-    this.keys$= productService.getAllProducts().subscribe(
+
+  constructor(private productService:ProductService) {
+  
+   productService.getAllProducts().snapshotChanges().subscribe(
       list=>{
-        this.productList=list.map(item=>{
+    this.filteredProduct=  this.productList =list.map(item=>{
           return{
           $key : item.key,
             ...item.payload.val()
           };
         })
-      }
-    )
-    console.log(this.keys$);
-        
-     
        
+        console.log("filtered product:" + this.productList);
+      });
      
-  }
+    
+      // this.productList.map(
+      //   product=>{
+      //     this.products = 
+      //     );
+        }
+      
 
+       
+        
+  
+    
+  filter(query:string){
+
+     this.filteredProduct  = (query) ?
+    this.productList.filter(p=> p.title.toLowerCase().includes(query.toLowerCase())) :
+     this.productList;    
+  }
   ngOnInit() {
   }
 

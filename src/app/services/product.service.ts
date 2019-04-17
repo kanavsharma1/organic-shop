@@ -15,7 +15,7 @@ export class ProductService {
 
   getAllProducts()
   {
-    return this.db.list('/products').snapshotChanges();
+    return this.db.list('/products');
     
   }
 

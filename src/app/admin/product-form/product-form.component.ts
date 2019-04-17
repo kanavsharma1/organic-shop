@@ -5,6 +5,7 @@ import { take } from 'rxjs/operators';
 import 'rxjs/add/operator/take';
 import { ProductService } from 'src/app/services/product.service';
 import { Router, ActivatedRoute } from '@angular/router';
+import { Product } from 'src/app/Models/product-object';
 
 @Component({
   selector: 'app-product-form',
@@ -13,7 +14,7 @@ import { Router, ActivatedRoute } from '@angular/router';
 })
 export class ProductFormComponent {
  id;
-  product;
+  product:{};
 categories$ : Observable<any>;   // creating variable of type observable because getCategories() return observable 
   constructor(
     private router:Router,
@@ -24,11 +25,16 @@ categories$ : Observable<any>;   // creating variable of type observable because
 this.categories$ = categoryService.getCategories();
 
       this.id = this.route.snapshot.paramMap.get('id');
-      if(this.id)
-    this.product= this.productService.getProduct(this.id).valueChanges().subscribe(p=>{
-    this.product=p;
-    })
-    console.log(this.product)
+      if(this.id){
+    this.product = this.productService.getProduct(this.id)
+    .valueChanges().subscribe(product=>{
+        this.product = product;
+
+      }
+
+    )
+    }    // this.product = p;
+    // });
     }
 
 
