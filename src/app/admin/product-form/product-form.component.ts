@@ -27,12 +27,12 @@ this.categories$ = categoryService.getCategories();
       this.id = this.route.snapshot.paramMap.get('id');
       if(this.id){
     this.product = this.productService.getProduct(this.id)
-    .valueChanges().subscribe(product=>{
-        this.product = product;
+    // .valueChanges().subscribe(product=>{
+    //     this.product = product;
 
-      }
+    //   }
 
-    )
+    // )
     }    // this.product = p;
     // });
     }
